@@ -4,10 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scarface</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav>
-        
-    </nav>
+    <header class="site-nav">
+        <div class="nav-content">
+            <a class="logo" href="#">Scarface</a>
+            <nav>
+                <a href="#home">Accueil</a>
+                <a href="#about">À propos</a>
+                <a href="#contact">Contact</a>
+                <a href="https://github.com/scareface13" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="home">
+        <section class="card">
+            <div class="hero">
+                <img src="image/IMG_4147.jpeg" alt="Photo de Innocent Coffy Manahenn">
+                <div>
+                    <h1>Bienvenue sur mon site</h1>
+                    <h2>À propos de moi</h2>
+                    <p>Je suis Innocent Coffy Manahenn, étudiant en informatique, designer en herbe, passionné d'art et de technologie.</p>
+                    <div class="cta"><a href="#about">Découvrir mes projets</a></div>
+                </div>
+            </div>
+            <div class="content" id="about">
+                <p>Mon objectif est de créer des expériences numériques captivantes qui combinent esthétique et fonctionnalité. Je suis constamment à la recherche de nouvelles idées et de défis pour améliorer mes compétences en design et en développement web.</p>
+                <p>Sur ce site, vous trouverez mes projets, mes inspirations et mes réflexions sur le monde du design et de la technologie. N'hésitez pas à explorer et à me contacter si vous souhaitez collaborer ou simplement discuter de tout ce qui concerne le design et la technologie.</p>
+            </div>
+        </section>
+
+        <section class="card" id="projects">
+            <div class="content">
+                <h2>Projets interactifs</h2>
+                <p>Voici deux petits outils pratiques : un calculateur et un convertisseur de température.</p>
+
+                <div class="project-grid">
+                    <div class="project-item">
+                        <h3>Calculatrice</h3>
+                        <input id="calc-display" type="text" readonly placeholder="0">
+                        <div class="buttons">
+                            <button type="button" data-value="7">7</button>
+                            <button type="button" data-value="8">8</button>
+                            <button type="button" data-value="9">9</button>
+                            <button type="button" data-value="/">÷</button>
+                            <button type="button" data-value="4">4</button>
+                            <button type="button" data-value="5">5</button>
+                            <button type="button" data-value="6">6</button>
+                            <button type="button" data-value="*">×</button>
+                            <button type="button" data-value="1">1</button>
+                            <button type="button" data-value="2">2</button>
+                            <button type="button" data-value="3">3</button>
+                            <button type="button" data-value="-">−</button>
+                            <button type="button" data-value="0">0</button>
+                            <button type="button" data-value=".">.</button>
+                            <button type="button" id="calc-equals">=</button>
+                            <button type="button" data-value="+">+</button>
+                        </div>
+                        <button type="button" id="calc-clear" class="full-width">C</button>
+                    </div>
+
+                    <div class="project-item">
+                        <h3>Convertisseur de température</h3>
+                        <div class="temp-row">
+                            <label>Celsius</label>
+                            <input id="celsius" type="number" step="any" value="0">
+                        </div>
+                        <div class="temp-row">
+                            <label>Fahrenheit</label>
+                            <input id="fahrenheit" type="number" step="any" value="32">
+                        </div>
+                        <button type="button" id="temp-convert">Convertir</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="contact">
+            <div class="content">
+                <h2>Contact</h2>
+                <p>Envoyez-moi un message sur GitHub ou par e-mail (ajoutez votre info ici).</p>
+                <p>GitHub : <a href="https://github.com/scareface13" target="_blank" rel="noopener noreferrer">github.com/scareface13</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const display = document.getElementById('calc-display');
+        const buttons = document.querySelectorAll('.buttons button[data-value]');
+        const clear = document.getElementById('calc-clear');
+        const equals = document.getElementById('calc-equals');
+
+        let calcValue = '';
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                calcValue += btn.dataset.value;
+                display.value = calcValue;
+            });
+        });
+
+        clear.addEventListener('click', () => {
+            calcValue = '';
+            display.value = '';
+        });
+
+        equals.addEventListener('click', () => {
+            try {
+                const result = Function('return ' + calcValue)();
+                display.value = result;
+                calcValue = String(result);
+            } catch {
+                display.value = 'Erreur';
+                calcValue = '';
+            }
+        });
+
+        const celsiusInput = document.getElementById('celsius');
+        const fahrenheitInput = document.getElementById('fahrenheit');
+        const convertBtn = document.getElementById('temp-convert');
+
+        function fromCelsius(c) {
+            return c * 9/5 + 32;
+        }
+
+        function fromFahrenheit(f) {
+            return (f - 32) * 5/9;
+        }
+
+        convertBtn.addEventListener('click', () => {
+            const c = parseFloat(celsiusInput.value);
+            const f = parseFloat(fahrenheitInput.value);
+
+            if (!isNaN(c)) {
+                fahrenheitInput.value = fromCelsius(c).toFixed(2);
+            } else if (!isNaN(f)) {
+                celsiusInput.value = fromFahrenheit(f).toFixed(2);
+            }
+        });
+    </script>
 </body>
 </html>
